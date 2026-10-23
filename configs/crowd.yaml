@@ -1,0 +1,75 @@
+# Preset: High-Density Crowds (Concerts, Malls, Transit Stations, Busy Streets)
+video:
+  mode: "sampled"
+  sample_fps: 8.0
+  camera_mode: "auto"
+  motion_compensation: true
+  adaptive_sampling: true
+  motion_pixel_threshold: 12.0
+
+detector:
+  model_path: "yolo11n.pt"
+  imgsz: 640
+  conf_threshold: 0.38
+  candidate_conf_threshold: 0.22
+  person_class_id: 0
+  device: "auto"
+  edge_margin_px: 12
+
+tracker:
+  type: "botsort"
+  track_high_thresh: 0.40
+  track_low_thresh: 0.15
+  new_track_thresh: 0.50
+  track_buffer: 60
+  match_thresh: 0.70
+  proximity_thresh: 0.40
+  appearance_thresh: 0.22
+  with_reid: true
+
+reid:
+  backbone: "osnet_x1_0"
+  weights_path: ""
+  similarity_threshold: 0.64
+  ambiguous_margin: 0.06
+  uncertain_lower_bound: 0.50
+  max_embeddings_per_identity: 15
+  max_crops_per_identity: 5
+  min_embedding_interval_sec: 0.35
+
+confirmation:
+  min_observations: 3
+  window_frames: 4
+  max_confirmation_window_sec: 6.0
+  candidate_timeout_sec: 4.0
+  single_obs_exception: false
+  single_obs_min_conf: 0.90
+  single_obs_min_quality: 0.80
+  min_crop_width: 28
+  min_crop_height: 56
+  crop_quality_threshold: 0.34
+  nms_iou_threshold: 0.55
+  containment_threshold: 0.70
+
+events:
+  return_absence_threshold_sec: 60.0
+  enable_return_events: true
+  grouping_window_sec: 1.5
+  max_selection_delay_sec: 2.0
+  frame_buffer_size: 30
+
+quality:
+  blur_laplacian_ref: 110.0
+  weight_conf: 0.30
+  weight_sharpness: 0.25
+  weight_size: 0.20
+  weight_boundary: 0.10
+  weight_occlusion: 0.15
+
+output:
+  base_dir: "output"
+  image_format: "jpg"
+  jpeg_quality: 92
+  save_person_crops: true
+  save_annotated_debug: false
+  save_debug_video: false

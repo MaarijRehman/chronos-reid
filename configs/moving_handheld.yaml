@@ -1,0 +1,75 @@
+# Preset: Handheld Phones, Bodycams, Drones & Moving Cameras
+video:
+  mode: "sampled"
+  sample_fps: 10.0
+  camera_mode: "moving"
+  motion_compensation: true
+  adaptive_sampling: true
+  motion_pixel_threshold: 8.0
+
+detector:
+  model_path: "yolo11n.pt"
+  imgsz: 640
+  conf_threshold: 0.42
+  candidate_conf_threshold: 0.28
+  person_class_id: 0
+  device: "auto"
+  edge_margin_px: 16
+
+tracker:
+  type: "botsort"
+  track_high_thresh: 0.42
+  track_low_thresh: 0.15
+  new_track_thresh: 0.52
+  track_buffer: 50
+  match_thresh: 0.82
+  proximity_thresh: 0.30
+  appearance_thresh: 0.32
+  with_reid: true
+
+reid:
+  backbone: "osnet_x1_0"
+  weights_path: ""
+  similarity_threshold: 0.65
+  ambiguous_margin: 0.05
+  uncertain_lower_bound: 0.50
+  max_embeddings_per_identity: 15
+  max_crops_per_identity: 5
+  min_embedding_interval_sec: 0.25
+
+confirmation:
+  min_observations: 2
+  window_frames: 3
+  max_confirmation_window_sec: 5.0
+  candidate_timeout_sec: 3.5
+  single_obs_exception: true
+  single_obs_min_conf: 0.88
+  single_obs_min_quality: 0.72
+  min_crop_width: 32
+  min_crop_height: 64
+  crop_quality_threshold: 0.36
+  nms_iou_threshold: 0.65
+  containment_threshold: 0.80
+
+events:
+  return_absence_threshold_sec: 45.0
+  enable_return_events: true
+  grouping_window_sec: 1.0
+  max_selection_delay_sec: 1.2
+  frame_buffer_size: 30
+
+quality:
+  blur_laplacian_ref: 100.0
+  weight_conf: 0.30
+  weight_sharpness: 0.30
+  weight_size: 0.15
+  weight_boundary: 0.15
+  weight_occlusion: 0.10
+
+output:
+  base_dir: "output"
+  image_format: "jpg"
+  jpeg_quality: 92
+  save_person_crops: true
+  save_annotated_debug: false
+  save_debug_video: false
